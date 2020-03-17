@@ -5,9 +5,6 @@ export default class Snake {
     this.ctx = ctx;
     this.scale = scale;
     this.snake = [
-      { x: 40, y: 0 },
-      { x: 30, y: 0 },
-      { x: 20, y: 0 },
       { x: 10, y: 0 },
       { x: 0, y: 0 }
     ];
