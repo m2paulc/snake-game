@@ -1,0 +1,41 @@
+@import url("https://fonts.googleapis.com/css?family=Oxanium&display=swap");
+
+/* resets */
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+body {
+	height: 100vh;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	background: #37474f;
+	font-family: "Oxanium", sans-serif;
+}
+
+h1 {
+	color: aliceblue;
+}
+
+.content {
+	width: 400px;
+	display: flex;
+	justify-content: space-around;
+}
+
+.content > p {
+	/* width: 103.33px; */
+	font-size: 1.15rem;
+	margin-top: 1rem;
+	color: aliceblue;
+}
+.content > p:nth-child(2) {
+	font-weight: bold;
+}
+.content > p:last-child {
+	width: 178px;
+}
