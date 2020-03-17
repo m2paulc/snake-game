@@ -16,6 +16,7 @@ export default class Snake {
     this.tail = {};
     this.fruit = new Fruit(ctx, scale);
     this.totalFruitEaten = 0;
+    this.collided = false;
   }
   move(x, y) {
     this.direction.x = x * this.scale;
@@ -41,6 +42,26 @@ export default class Snake {
     }
     return false;
   }
+  grow() {
+    this.newHead = {
+      x: this.head.x + this.direction.x,
+      y: this.head.y + this.direction.y
+    };
+    this.snake.unshift(this.newHead);
+  }
+  collide() {
+    if (this.snake.length > 6) {
+      for (let i = 1; i < this.snake.length; i++) {
+        if (
+          this.snake[0].x === this.snake[i].x &&
+          this.snake[0].y === this.snake[i].y
+        ) {
+          return true;
+        }
+      }
+    }
+    return false;
+  }
   updateSnake() {
     this.head.x = this.snake[0].x;
     this.head.y = this.snake[0].y;
@@ -50,6 +71,7 @@ export default class Snake {
       y: this.head.y + this.direction.y
     };
     this.snake.unshift(newHead);
+    this.collided = this.collide();
   }
   draw() {
     this.ctx.clearRect(0, 0, 400, 400);

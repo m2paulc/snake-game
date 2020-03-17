@@ -3,6 +3,7 @@ import Snake from './snake.js';
 const cvs = document.querySelector("#canvas");
 const ctx = cvs.getContext("2d");
 const scale = 10;
+let speed = 500;
 const columns = canvas.width / scale;
 const rows = canvas.height / scale;
 let gameOver = false;
@@ -54,14 +55,17 @@ function stopGame() {
 
 const snake = new Snake(ctx, scale);
 
-draw();
 snake.draw();
 keyDirections();
 let idGame = setInterval(() => {
   if (!gameOver) {
-    if (snake.eat()) console.log("eaten");
+    if (snake.eat()) {
+      snake.grow();
+      speed -= 10;
+    }
     snake.updateSnake();
     snake.draw();
-    gameOver = snake.hitWalls();
+    // console.log(snake.collided);
+    if (snake.hitWalls() || snake.collided) gameOver = true;
   } else stopGame();
-}, 500);
+}, speed);
