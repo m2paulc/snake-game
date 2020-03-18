@@ -34,7 +34,7 @@ export default class Snake {
   eat() {
     if (this.head.x === this.fruit.x && this.head.y === this.fruit.y) {
       this.totalFruitEaten += 1;
-      this.fruit.fruitStart = true;
+      this.fruit.fruitShow = true;
       return true;
     }
     return false;
@@ -68,13 +68,13 @@ export default class Snake {
       y: this.head.y + this.direction.y
     };
     this.snake.unshift(newHead);
-    this.collided = this.collide();
+    this.collided = this.collide() || this.hitWalls();
   }
   draw() {
     this.ctx.clearRect(0, 0, 400, 400);
     this.ctx.fillStyle = "#cecece";
     this.ctx.fillRect(0, 0, 400, 400);
-    // this.fruit.draw();
+    this.fruit.draw();
     for (let i = 0; i < this.snake.length; i++) {
       this.ctx.fillStyle = "green";
       this.ctx.fillRect(
@@ -84,6 +84,5 @@ export default class Snake {
         this.scale
       );
     }
-    this.fruit.draw();
   }
 }

@@ -3,15 +3,7 @@ import Snake from './snake.js';
 const cvs = document.querySelector("#canvas");
 const ctx = cvs.getContext("2d");
 const scale = 10;
-const columns = canvas.width / scale;
-const rows = canvas.height / scale;
 let gameOver = false;
-
-function draw() {
-  ctx.clearRect(0, 0, cvs.width, cvs.height);
-  ctx.fillStyle = "#cecece";
-  ctx.fillRect(0, 0, cvs.width, cvs.height);
-}
 
 function keyDirections() {
   let currentDirection = "";
@@ -57,11 +49,11 @@ const snake = new Snake(ctx, scale);
 const score = document.querySelector("#score");
 const speedometer = document.querySelector('#speed');
 
-snake.draw();
-keyDirections();
 let initialSpeed = 500;
 let speed = initialSpeed;
 score.textContent = 0;
+snake.draw();
+keyDirections();
 let idGame = setInterval(runSnakeGame, speed);
 function runSnakeGame() {
   if (!gameOver) {
@@ -76,7 +68,6 @@ function runSnakeGame() {
     speedometer.textContent = initialSpeed - speed;
     snake.updateSnake();
     snake.draw();
-    // console.log(snake.collided);
-    if (snake.hitWalls() || snake.collided) gameOver = true;
+    if (snake.collided) gameOver = true;
   } else stopGame();
 }

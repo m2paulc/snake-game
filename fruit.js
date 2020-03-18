@@ -1,8 +1,10 @@
 const cvs = document.querySelector("#canvas");
-const ctx = cvs.getContext('2d');
+// const ctx = cvs.getContext('2d');
 const scale = 10;
 const columns = cvs.width / scale;
 const rows = cvs.height / scale;
+const fruitX = document.querySelector('#fruitx');
+const fruitY = document.querySelector('#fruity');
 
 export default class Fruit {
   constructor(ctx, scale) {
@@ -10,18 +12,21 @@ export default class Fruit {
     this.scale = scale;
     this.x = 0;
     this.y = 0;
-    this.fruitStart = true;
+    this.fruitShow = true;
   }
   appear() {
-    if (this.fruitStart) {
-      this.x = Math.round(Math.random() * rows) * this.scale;
-      this.y = Math.round(Math.random() * columns) * this.scale;
+    if (this.fruitShow) {
+      this.x = Math.abs((Math.round(Math.random() * rows) - 1) * this.scale);
+      this.y = Math.abs((Math.round(Math.random() * columns) - 1) * this.scale);
     }
-    this.fruitStart = false;
+    this.fruitShow = false;
   }
   draw() {
     this.appear();
     this.ctx.fillStyle = "red";
     this.ctx.fillRect(this.x, this.y, this.scale, this.scale);
+    //debug purpose only
+    fruitX.textContent = this.x;
+    fruitY.textContent = this.y;
   }
 }
