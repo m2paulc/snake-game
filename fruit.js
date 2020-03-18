@@ -1,5 +1,5 @@
-const cvs = document.querySelector("#canvas");
-// const ctx = cvs.getContext('2d');
+const cvs = document.querySelector("#uiCanvas");
+const ctx = cvs.getContext('2d');
 const scale = 10;
 const columns = cvs.width / scale;
 const rows = cvs.height / scale;
@@ -26,7 +26,7 @@ export default class Fruit {
     this.ctx.fillStyle = "red";
     this.ctx.fillRect(this.x, this.y, this.scale, this.scale);
     //debug purpose only
-    fruitX.textContent = this.x;
-    fruitY.textContent = this.y;
+    // fruitX.textContent = this.x;
+    // fruitY.textContent = this.y;
   }
 }

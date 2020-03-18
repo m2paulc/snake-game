@@ -1,9 +1,16 @@
 import Snake from './snake.js';
 
-const cvs = document.querySelector("#canvas");
+const backgroundCvs = document.querySelector('#backgroundCanvas');
+const backgroundCtx = backgroundCvs.getContext("2d");
+const cvs = document.querySelector("#uiCanvas");
 const ctx = cvs.getContext("2d");
 const scale = 10;
-let gameOver = false;
+
+function backgroundDraw() {
+  backgroundCtx.clearRect(0, 0, backgroundCvs.width, backgroundCvs.height);
+  backgroundCtx.fillStyle = "#cecece";
+  backgroundCtx.fillRect(0, 0, backgroundCvs.width, backgroundCvs.height);
+}
 
 function keyDirections() {
   let currentDirection = "";
@@ -39,35 +46,65 @@ function keyDirections() {
   });
 }
 
+let timeout = null;
+function restartGame() {
+  idGame = null;
+  gameOver = false;
+  snake.collided = false;
+  window.addEventListener('keydown', function (e) {
+    e.preventDefault();
+    clearTimeout(timeout);
+    timeout = setTimeout(() => {
+      if (e.which === 32) {
+        backgroundDraw();
+        startGame();
+      }
+      console.log(gameOver);
+    }, 500);
+  });
+}
+
+let idGame = null;
+let gameOver = false;
 const status = document.querySelector('#status');
-function stopGame() {
-  status.textContent = 'Game Over!';
+function endGame() {
+  status.textContent = 'Press spacebar to restart game';
+  backgroundCtx.font = "36px Oxanium";
+  backgroundCtx.fillStyle = 'red';
+  backgroundCtx.textAlign = 'center';
+  backgroundCtx.fillText('Game Over', backgroundCvs.width / 2, backgroundCvs.height / 2);
   clearInterval(idGame);
+  restartGame();
 }
 
 const snake = new Snake(ctx, scale);
 const score = document.querySelector("#score");
 const speedometer = document.querySelector('#speed');
 
-let initialSpeed = 500;
-let speed = initialSpeed;
-score.textContent = 0;
-snake.draw();
-keyDirections();
-let idGame = setInterval(runSnakeGame, speed);
-function runSnakeGame() {
-  if (!gameOver) {
-    if (snake.eat()) {
-      snake.grow();
-      speed -= 10;
-      score.textContent = snake.totalFruitEaten;
-      status.textContent = 'Keep Going!';
-      clearInterval(idGame);
-      idGame = setInterval(runSnakeGame, speed);
-    }
-    speedometer.textContent = initialSpeed - speed;
-    snake.updateSnake();
-    snake.draw();
-    if (snake.collided) gameOver = true;
-  } else stopGame();
+function startGame() {
+  let initialSpeed = 500;
+  let speed = initialSpeed;
+  score.textContent = 0;
+  status.textContent = 'Press the arrow keys to start the game';
+  snake.draw();
+  keyDirections();
+  idGame = setInterval(runSnakeGame, speed);
+  function runSnakeGame() {
+    if (!gameOver) {
+      if (snake.eat()) {
+        snake.grow();
+        speed -= 10;
+        score.textContent = snake.totalFruitEaten;
+        status.textContent = 'Keep Going!';
+        clearInterval(idGame);
+        idGame = setInterval(runSnakeGame, speed);
+      }
+      speedometer.textContent = initialSpeed - speed;
+      snake.updateSnake();
+      snake.draw();
+      if (snake.collided) gameOver = true;
+    } else endGame();
+  }
 }
+backgroundDraw();
+startGame();

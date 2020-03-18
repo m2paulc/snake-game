@@ -72,8 +72,6 @@ export default class Snake {
   }
   draw() {
     this.ctx.clearRect(0, 0, 400, 400);
-    this.ctx.fillStyle = "#cecece";
-    this.ctx.fillRect(0, 0, 400, 400);
     this.fruit.draw();
     for (let i = 0; i < this.snake.length; i++) {
       this.ctx.fillStyle = "green";
