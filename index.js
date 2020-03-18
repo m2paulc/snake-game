@@ -59,9 +59,9 @@ function restartGame() {
         backgroundDraw();
         startGame();
       }
-      console.log(gameOver);
     }, 500);
   });
+  snake = new Snake(ctx, scale);
 }
 
 let idGame = null;
@@ -77,11 +77,12 @@ function endGame() {
   restartGame();
 }
 
-const snake = new Snake(ctx, scale);
+let snake = new Snake(ctx, scale);
 const score = document.querySelector("#score");
 const speedometer = document.querySelector('#speed');
 
 function startGame() {
+  clearTimeout(timeout);
   let initialSpeed = 500;
   let speed = initialSpeed;
   score.textContent = 0;
