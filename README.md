@@ -16,6 +16,8 @@ This is a snake game app using HTML, CSS and plain vanilla javascript. I'm using
 <br>
 <br>
 <br>
+<br>
+<br>
 </p>
 :+1: :sparkles: :tada: :rocket: :metal: :octocat:
 
