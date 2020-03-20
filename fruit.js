@@ -3,8 +3,6 @@ const ctx = cvs.getContext('2d');
 const scale = 10;
 const columns = cvs.width / scale;
 const rows = cvs.height / scale;
-const fruitX = document.querySelector('#fruitx');
-const fruitY = document.querySelector('#fruity');
 
 export default class Fruit {
   constructor(ctx, scale) {
@@ -25,8 +23,5 @@ export default class Fruit {
     this.appear();
     this.ctx.fillStyle = "red";
     this.ctx.fillRect(this.x, this.y, this.scale, this.scale);
-    //debug purpose only
-    // fruitX.textContent = this.x;
-    // fruitY.textContent = this.y;
   }
 }

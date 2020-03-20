@@ -4,6 +4,7 @@ export default class Snake {
   constructor(ctx, scale) {
     this.ctx = ctx;
     this.scale = scale;
+    //snake's head and tail
     this.snake = [
       { x: 10, y: 0 },
       { x: 0, y: 0 }

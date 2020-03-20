@@ -46,23 +46,14 @@ function keyDirections() {
   });
 }
 
-let timeout = null;
-function restartGame() {
-  idGame = null;
-  gameOver = false;
-  snake.collided = false;
-  window.addEventListener('keydown', function (e) {
-    e.preventDefault();
-    clearTimeout(timeout);
-    timeout = setTimeout(() => {
-      if (e.which === 32) {
-        backgroundDraw();
-        startGame();
-      }
-    }, 500);
-  });
-  snake = new Snake(ctx, scale);
-}
+window.addEventListener('keyup', function (e) {
+  e.preventDefault();
+  if (!idGame && e.which === 32) {
+    backgroundDraw();
+    snake = new Snake(ctx, scale);
+    startGame();
+  }
+}, 500);
 
 let idGame = null;
 let gameOver = false;
@@ -74,7 +65,9 @@ function endGame() {
   backgroundCtx.textAlign = 'center';
   backgroundCtx.fillText('Game Over', backgroundCvs.width / 2, backgroundCvs.height / 2);
   clearInterval(idGame);
-  restartGame();
+  idGame = null;
+  gameOver = false;
+  snake.collided = false;
 }
 
 let snake = new Snake(ctx, scale);
@@ -82,7 +75,6 @@ const score = document.querySelector("#score");
 const speedometer = document.querySelector('#speed');
 
 function startGame() {
-  clearTimeout(timeout);
   let initialSpeed = 500;
   let speed = initialSpeed;
   score.textContent = 0;
@@ -107,5 +99,6 @@ function startGame() {
     } else endGame();
   }
 }
+
 backgroundDraw();
 startGame();
