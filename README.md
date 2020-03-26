@@ -14,5 +14,6 @@ This is a snake game app using HTML, CSS and plain vanilla javascript.
 </div>
 :+1: :sparkles: :tada: :rocket: :metal: :octocat:
 <p><br><br></p>
+
 ## Author 
 Paul Caoile - Front-End Developer - [LinkedIn](https://www.linkedin.com/in/michaelpeterpaulcaoile/) 
