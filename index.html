@@ -10,17 +10,22 @@
 		<div class="container">
 			<h1>Snake Game</h1>
 			<canvas
-				class="bgCanvas"
-				id="backgroundCanvas"
+				class="back-canvas"
+				id="background-canvas"
 				width="400"
 				height="400"
 			></canvas>
-			<canvas class="uiCanvas" id="uiCanvas" width="400" height="400"></canvas>
+			<canvas
+				class="game-canvas"
+				id="game-canvas"
+				width="400"
+				height="400"
+			></canvas>
 			<div class="content">
 				<p class="speed">Speed: <span id="speed"></span></p>
 				<p class="score">Score: <span id="score"></span></p>
 			</div>
-			<div class="debug-fruit">
+			<div>
 				<p class="status"><span id="status"></span></p>
 			</div>
 		</div>

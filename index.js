@@ -1,16 +1,18 @@
+import DrawCanvasBackground from './DrawCanvasBackground.js';
 import Snake from './snake.js';
+import Fruit from './fruit.js';
+import CanvasElements from './CanvasElements.js';
 
-const backgroundCvs = document.querySelector('#backgroundCanvas');
-const backgroundCtx = backgroundCvs.getContext("2d");
-const cvs = document.querySelector("#uiCanvas");
-const ctx = cvs.getContext("2d");
-const scale = 10;
+const SCALE = 10;
+const backgroundCanvas = document.querySelector('#background-canvas');
+const backgroundContext = backgroundCanvas.getContext("2d");
+const gameCanvas = document.querySelector("#game-canvas");
+const gameContext = gameCanvas.getContext("2d");
 
-function backgroundDraw() {
-  backgroundCtx.clearRect(0, 0, backgroundCvs.width, backgroundCvs.height);
-  backgroundCtx.fillStyle = "#cecece";
-  backgroundCtx.fillRect(0, 0, backgroundCvs.width, backgroundCvs.height);
-}
+let fruit = new Fruit(gameCanvas, SCALE);
+let snake = new Snake(gameContext, SCALE);
+const drawBackground = new DrawCanvasBackground(backgroundCanvas, backgroundContext, SCALE, fruit);
+const drawElements = new CanvasElements(gameCanvas, SCALE);
 
 function keyDirections() {
   let currentDirection = "";
@@ -49,8 +51,8 @@ function keyDirections() {
 window.addEventListener('keyup', function (e) {
   e.preventDefault();
   if (!idGame && e.which === 32) {
-    backgroundDraw();
-    snake = new Snake(ctx, scale);
+    drawBackground.canvasBackground();
+    snake = new Snake(gameContext, SCALE);
     startGame();
   }
 }, 500);
@@ -60,31 +62,34 @@ let gameOver = false;
 const status = document.querySelector('#status');
 function endGame() {
   status.textContent = 'Press spacebar to restart game';
-  backgroundCtx.font = "36px Oxanium";
-  backgroundCtx.fillStyle = 'red';
-  backgroundCtx.textAlign = 'center';
-  backgroundCtx.fillText('Game Over', backgroundCvs.width / 2, backgroundCvs.height / 2);
+  backgroundContext.font = "36px Oxanium";
+  backgroundContext.fillStyle = 'red';
+  backgroundContext.textAlign = 'center';
+  backgroundContext.fillText('Game Over', backgroundCanvas.width / 2, backgroundCanvas.height / 2);
   clearInterval(idGame);
   idGame = null;
   gameOver = false;
   snake.collided = false;
 }
 
-let snake = new Snake(ctx, scale);
-const score = document.querySelector("#score");
-const speedometer = document.querySelector('#speed');
-
 function startGame() {
+  const score = document.querySelector("#score");
+  const speedometer = document.querySelector('#speed');
   let initialSpeed = 500;
   let speed = initialSpeed;
   score.textContent = 0;
   status.textContent = 'Press the arrow keys to start the game';
-  snake.draw();
+  // drawElements.clearCanvas();
+  // drawElements.makeFruit(fruit);
+  // snake.draw();
   keyDirections();
   idGame = setInterval(runSnakeGame, speed);
   function runSnakeGame() {
     if (!gameOver) {
-      if (snake.eat()) {
+      console.log(snake.eat(fruit));
+      if (snake.eat(fruit)) {
+        // fruit.fruitShow = true;
+        console.log('eat');
         snake.grow();
         speed -= 10;
         score.textContent = snake.totalFruitEaten;
@@ -94,11 +99,13 @@ function startGame() {
       }
       speedometer.textContent = initialSpeed - speed;
       snake.updateSnake();
+      drawElements.clearCanvas();
+      drawElements.makeFruit(fruit);
       snake.draw();
       if (snake.collided) gameOver = true;
     } else endGame();
   }
 }
 
-backgroundDraw();
+drawBackground.canvasBackground();
 startGame();

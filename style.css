@@ -23,18 +23,18 @@ body {
 	position: relative;
 }
 
-.bgCanvas,
-.uiCanvas {
+.back-canvas,
+.game-canvas {
 	position: absolute;
 	top: 25%;
 	left: 50%;
 	transform: translate(-50%, 0);
 }
 
-.bgCanvas {
+.back-canvas {
 	z-index: 1;
 }
-.uiCanvas {
+.game-canvas {
 	z-index: 2;
 }
 

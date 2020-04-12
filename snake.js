@@ -1,5 +1,3 @@
-import Fruit from './fruit.js';
-
 export default class Snake {
   constructor(ctx, scale) {
     this.ctx = ctx;
@@ -12,7 +10,6 @@ export default class Snake {
     this.direction = { x: 0, y: 0 };
     this.head = { x: this.snake[0].x, y: this.snake[0].y };
     this.tail = {};
-    this.fruit = new Fruit(ctx, scale);
     this.totalFruitEaten = 0;
     this.collided = false;
   }
@@ -32,12 +29,14 @@ export default class Snake {
     }
     return false;
   }
-  eat() {
-    if (this.head.x === this.fruit.x && this.head.y === this.fruit.y) {
+  eat(fruit) {
+    if (this.head.x === fruit.x && this.head.y === fruit.x) {
       this.totalFruitEaten += 1;
-      this.fruit.fruitShow = true;
+      console.log('eaten');
+      console.log(`check x-coor:${fruit.x === this.head.x}`);
       return true;
     }
+    console.log(`fruit:${fruit.x},${fruit.y} head:${this.head.x},${this.head.y}`);
     return false;
   }
   grow() {
@@ -72,8 +71,6 @@ export default class Snake {
     this.collided = this.collide() || this.hitWalls();
   }
   draw() {
-    this.ctx.clearRect(0, 0, 400, 400);
-    this.fruit.draw();
     for (let i = 0; i < this.snake.length; i++) {
       this.ctx.fillStyle = "green";
       this.ctx.fillRect(
